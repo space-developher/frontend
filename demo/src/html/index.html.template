@@ -100,10 +100,17 @@
       <div class="ohf-logo">
         <img src="/static/images/ohf-badge.svg" alt="Home Assistant is a project by the Open Home Foundation" height="46">
       </div>
-    </div>
+    </div>123123
     <ha-demo></ha-demo>
     <%= renderTemplate("../../../src/html/_js_base.html.template") %>
     <%= renderTemplate("../../../src/html/_preload_roboto.html.template") %>
     <%= renderTemplate("../../../src/html/_script_loader.html.template") %>
+    <script>
+      window.addEventListener("error", (event) => {
+        if (event.message.includes("ResizeObserver")) {
+          event.stopImmediatePropagation(); // 에러를 무시하고 전파되지 않도록 설정
+        }
+      });
+    </script>
   </body>
 </html>
