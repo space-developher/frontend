@@ -83,6 +83,7 @@ export class HuiCardPicker extends LitElement {
       let cards = cardElements.map(
         (cardElement: CardElement) => cardElement.card
       );
+
       const options: IFuseOptions<Card> = {
         keys: ["type", "name", "description"],
         isCaseSensitive: false,
@@ -134,7 +135,6 @@ export class HuiCardPicker extends LitElement {
     const suggestedCards = this._suggestedCards(this._cards);
     const othersCards = this._otherCards(this._cards);
     const customCardsItems = this._customCards(this._cards);
-
     return html`
       <search-input
         .hass=${this.hass}
@@ -156,45 +156,11 @@ export class HuiCardPicker extends LitElement {
             ? this._filterCards(this._cards, this._filter).map(
                 (cardElement: CardElement) => cardElement.element
               )
-            : html`
-                ${suggestedCards.length > 0
-                  ? html`
-                      <div class="cards-container-header">
-                        ${this.hass!.localize(
-                          `ui.panel.lovelace.editor.card.generic.suggested_cards`
-                        )}
-                      </div>
-                    `
-                  : nothing}
-                ${this._renderClipboardCard()}
-                ${suggestedCards.map(
-                  (cardElement: CardElement) => cardElement.element
-                )}
-                ${suggestedCards.length > 0
-                  ? html`
-                      <div class="cards-container-header">
-                        ${this.hass!.localize(
-                          `ui.panel.lovelace.editor.card.generic.other_cards`
-                        )}
-                      </div>
-                    `
-                  : nothing}
-                ${othersCards.map(
-                  (cardElement: CardElement) => cardElement.element
-                )}
-                ${customCardsItems.length > 0
-                  ? html`
-                      <div class="cards-container-header">
-                        ${this.hass!.localize(
-                          `ui.panel.lovelace.editor.card.generic.custom_cards`
-                        )}
-                      </div>
-                    `
-                  : nothing}
-                ${customCardsItems.map(
-                  (cardElement: CardElement) => cardElement.element
-                )}
-              `}
+            : html`${[
+                ...suggestedCards,
+                ...othersCards,
+                ...customCardsItems,
+              ].map((cardElement: CardElement) => cardElement.element)}`}
         </div>
         <div class="cards-container">
           <div
@@ -411,6 +377,7 @@ export class HuiCardPicker extends LitElement {
   ): Promise<TemplateResult> {
     let { type } = card;
     const { showElement, isCustom, name, description } = card;
+
     const customCard = isCustom ? getCustomCardEntry(type) : undefined;
     if (isCustom) {
       type = `${CUSTOM_TYPE_PREFIX}${type}`;
