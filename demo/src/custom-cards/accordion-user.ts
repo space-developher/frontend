@@ -42,6 +42,14 @@ export class AccordionUser extends LitElement implements LovelaceCard {
     }
   }
 
+  private async _getIconSvgPath(iconPath): Promise<any> {
+    try {
+      return html`${unsafeHTML(iconPath)}`;
+    } catch (err) {
+      return "";
+    }
+  }
+
   protected render() {
     if (this._hidden) {
       return nothing;
@@ -55,9 +63,11 @@ export class AccordionUser extends LitElement implements LovelaceCard {
               async (_) => html`
                 <div class="layout">
                   <div>
-                    ${this.config.iconPath
-                      ? html`${unsafeHTML(await this._getIconSvg())}`
-                      : nothing}
+                    ${this.config.iconSvg
+                      ? await this._getIconSvgPath(this.config.iconSvg)
+                      : this.config.iconPath
+                        ? html`${unsafeHTML(await this._getIconSvg())}`
+                        : nothing}
                     <span class="user">${this.config?.title}</span>
                   </div>
                   <div class="info">

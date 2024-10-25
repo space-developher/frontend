@@ -21,15 +21,15 @@ export class AccordionCard extends LitElement implements LovelaceCard {
 
   @state() protected _cards?: any;
 
-  @state() protected _config?: any;
-
   private _hidden = localStorage.hide_demo_card;
 
   public getCardSize() {
     return this._hidden ? 0 : 2;
   }
 
-  public setConfig(_config: LovelaceCardConfig) {}
+  public setConfig(_config: LovelaceCardConfig) {
+    if (_config) this.config = _config;
+  }
 
   protected render() {
     if (this._hidden) {
@@ -41,12 +41,39 @@ export class AccordionCard extends LitElement implements LovelaceCard {
         <div class="content">
           ${until(
             selectedDemoConfig.then(
-              (conf) => html`
+              (_) => html`
                 <div class="layout">
                   <div>${AccordionLogo}</div>
                   <div class="info">
-                    <span class="title">${conf.name}</span>
-                    <span>${``}</span>
+                    <span class="title">${this.config.title}</span>
+                    <div class="sub-info">
+                      ${this.config?.entities?.map((entity) => {
+                        if (!entity) {
+                          return nothing;
+                        }
+
+                        if (typeof entity === "object") {
+                          const _entity = Object.entries(entity);
+
+                          return _entity.map(
+                            ([key, value]) => html`
+                              <span
+                                >${key}:
+                                ${value !== undefined
+                                  ? value
+                                  : "No value set"}</span
+                              >
+                            `
+                          );
+                        }
+
+                        if (typeof entity === "string") {
+                          return html`<span>${entity}</span>`;
+                        }
+
+                        return nothing;
+                      })}
+                    </div>
                   </div>
                 </div>
               `
@@ -68,6 +95,10 @@ export class AccordionCard extends LitElement implements LovelaceCard {
   static get styles(): CSSResultGroup {
     return [
       css`
+        .sub-info {
+          display: flex;
+          gap: 5px;
+        }
         .layout {
           display: flex;
           max-width: 1676px;
