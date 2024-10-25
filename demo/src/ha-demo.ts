@@ -14,7 +14,7 @@ import { mockAreaRegistry } from "./stubs/area_registry";
 import { mockAuth } from "./stubs/auth";
 import { mockConfigEntries } from "./stubs/config_entries";
 import { mockEnergy } from "./stubs/energy";
-import { energyEntities } from "./stubs/entities";
+import { energyEntities, summaryEntities } from "./stubs/entities";
 import { mockEntityRegistry } from "./stubs/entity_registry";
 import { mockEvents } from "./stubs/events";
 import { mockFrontend } from "./stubs/frontend";
@@ -108,6 +108,7 @@ export class HaDemo extends HomeAssistantAppEl {
     ]);
 
     hass.addEntities(energyEntities());
+    hass.addEntities(summaryEntities());
 
     // Once config is loaded AND localize, set entities and apply theme.
     Promise.all([selectedDemoConfig, localizePromise]).then(

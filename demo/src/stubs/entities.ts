@@ -1,4 +1,29 @@
-import { convertEntities } from "../../../src/fake_data/entity";
+import { convertEntities, Entity } from "../../../src/fake_data/entity";
+
+export const summaryEntities = (): Entity[] =>
+  convertEntities({
+    "summary.registry": {
+      entity_id: "summary.registry",
+      state: "open",
+      attributes: {
+        used: 4,
+      },
+    },
+    "summary.user": {
+      entity_id: "summary.registry",
+      state: "open",
+      attributes: {
+        used: 4,
+      },
+    },
+    "summary.group": {
+      entity_id: "summary.registry",
+      state: "open",
+      attributes: {
+        used: 5,
+      },
+    },
+  });
 
 export const mapEntities = () =>
   convertEntities({

@@ -88,6 +88,7 @@ const LAZY_LOAD_TYPES = {
   "statistics-graph": () => import("../cards/hui-statistics-graph-card"),
   statistic: () => import("../cards/hui-statistic-card"),
   "vertical-stack": () => import("../cards/hui-vertical-stack-card"),
+  accordion: () => import("../../../../demo/src/custom-cards/accordion-card"),
 };
 
 // This will not return an error card but will throw the error

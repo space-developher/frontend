@@ -7,6 +7,8 @@ import {
 } from "../configs/demo-configs";
 import "../custom-cards/cast-demo-row";
 import "../custom-cards/ha-demo-card";
+import "../custom-cards/accordion-card";
+import "../custom-cards/accordion-user";
 import { mapEntities } from "./entities";
 
 export const mockLovelace = (
