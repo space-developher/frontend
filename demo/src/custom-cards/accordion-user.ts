@@ -4,7 +4,7 @@ import { until } from "lit/directives/until";
 import "../../../src/components/ha-card";
 import "../../../src/components/ha-button";
 import "../../../src/components/ha-circular-progress";
-import { unsafeHTML } from "lit/directives/unsafe-html";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { LovelaceCardConfig } from "../../../src/data/lovelace/config/card";
 import { MockHomeAssistant } from "../../../src/fake_data/provide_hass";
 import { Lovelace, LovelaceCard } from "../../../src/panels/lovelace/types";
@@ -30,6 +30,18 @@ export class AccordionUser extends LitElement implements LovelaceCard {
     }
   }
 
+  private async _getIconSvg(): Promise<string> {
+    try {
+      const module = await import(
+        `../../public/assets/accordion/accordion-${this.config.iconPath}`
+      );
+
+      return module.default; // 필요한 경우 export된 이름을 조정
+    } catch (error) {
+      return "";
+    }
+  }
+
   protected render() {
     if (this._hidden) {
       return nothing;
@@ -40,11 +52,11 @@ export class AccordionUser extends LitElement implements LovelaceCard {
         <div class="content">
           ${until(
             selectedDemoConfig.then(
-              (_) => html`
+              async (_) => html`
                 <div class="layout">
                   <div>
-                    ${this.config.iconSvg
-                      ? html`${unsafeHTML(this.config.iconSvg)}`
+                    ${this.config.iconPath
+                      ? html`${unsafeHTML(await this._getIconSvg())}`
                       : nothing}
                     <span class="user">${this.config?.title}</span>
                   </div>

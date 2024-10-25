@@ -9,7 +9,7 @@ import { MockHomeAssistant } from "../../../src/fake_data/provide_hass";
 import { Lovelace, LovelaceCard } from "../../../src/panels/lovelace/types";
 import { selectedDemoConfig } from "../configs/demo-configs";
 
-import { AccordionLogo } from "./accordion-log";
+import { AccordionLogo } from "../../public/assets/accordion/accordion-logo";
 
 @customElement("accordion-card")
 export class AccordionCard extends LitElement implements LovelaceCard {

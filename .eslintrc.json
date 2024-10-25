@@ -68,7 +68,7 @@
       "ignorePackages",
       {
         "ts": "never",
-        "js": "never"
+        "js": "always"
       }
     ],
     "no-restricted-syntax": ["error", "LabeledStatement", "WithStatement"],

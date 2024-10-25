@@ -1,7 +1,4 @@
-import { html } from "lit";
-
-export const AccordionUserLogo = html`
-  <svg
+const AccordionUserIcon = `<svg
     width="25"
     height="24"
     viewBox="0 0 25 24"
@@ -26,5 +23,6 @@ export const AccordionUserLogo = html`
         />
       </clipPath>
     </defs>
-  </svg>
-`;
+  </svg>`;
+
+export default AccordionUserIcon;
